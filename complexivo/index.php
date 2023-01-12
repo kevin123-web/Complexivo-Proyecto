@@ -9,6 +9,10 @@ $sql =  $con->prepare("SELECT id, name , price FROM products WHERE activo=1");
 $sql->execute();
 $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
+//session_destroy();
+
+//print_r($_SESSION);
+
 ?>
 
 <!DOCTYPE html>
@@ -45,17 +49,20 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <a href="#" class="nav-link ">Contacto</a>
                         </li>
                     </ul>
-                    <a href="carrito.php" class="btn btn-primary">Carrito</a>
+                    <a href="list_checkout.php" class="btn btn-primary">
+                        Carrito<span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
+                    </a>
                 </div>
             </div>
         </div>
     </header>
 
+    <!--contenido-->
     <main>
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col">
-                    <?php foreach ($resultado as $row) { ?>
+                <?php foreach ($resultado as $row) { ?>
+                    <div class="col">
                         <div class="card shadow-sm">
                             <?php
                             $id = $row['id'];
@@ -74,17 +81,39 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="btn-group">
                                         <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
                                     </div>
-                                    <a href="" class="btn btn-success">Agregar</a>
+                                    <button class="btn btn-outline-success" type="button" onclick="addProduct(<?php echo  $row['id']; ?>,
+                                    '<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>')">Agregar al carrito</button>
                                 </div>
                             </div>
                         </div>
-                </div>
-            <?php } ?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
+    <script>
+        function addProduct(id, token) {
+            let url = 'class/carrito.php';
+            let formData = new FormData();
+            formData.append('id', id);
+            formData.append('token', token);
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'cors'
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        let element = document.getElementById("num_cart")
+                        element.innerHTML = data.number
+                    }
+                })
+        }
     </script>
 
 </body>
