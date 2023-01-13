@@ -122,13 +122,13 @@ if ($products != null) {
                 <?php } ?>
                 </table>
             </div>
-
-            <div class="row">
-                <div class="col-md-5 offset-md-7 d-grid gap-2">
-                    <button class="btn btn-primary btn-lg">Realizar Pago</button>
+            <?php if ($list_carrito != null) { ?>
+                <div class="row">
+                    <div class="col-md-5 offset-md-7 d-grid gap-2">
+                        <a href="payment.php" class="btn btn-primary btn-lg">Realizar Pago</a>
+                    </div>
                 </div>
-            </div>
-
+            <?php } ?>
         </div>
     </main>
     <!-- Modal -->
@@ -156,7 +156,7 @@ if ($products != null) {
 
     <script>
         let eliminaModal = document.getElementById('eliminaModal')
-        eliminaModal.addEventListener('show.bs.modal', function(event){
+        eliminaModal.addEventListener('show.bs.modal', function(event) {
             let button = event.relatedTarget
             let id = button.getAttribute('data-bs-id')
             let buttonElimina = eliminaModal.querySelector('.modal-footer #btn-elimina')
