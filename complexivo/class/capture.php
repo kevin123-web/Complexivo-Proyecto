@@ -8,9 +8,9 @@ $con = $db->conectar();
 $json =  file_get_contents('php://input');
 $datos = json_decode($json, true);
 
-echo '<pre>';
+/*echo '<pre>';
 print_r($datos);
-echo '</pre>';
+echo '</pre>';*/
 
 if (is_array($datos)) {
     $id_transaction = $datos['detalles']['id'];
@@ -48,6 +48,7 @@ if (is_array($datos)) {
 
                 $sql_insert->execute([$id, $clave, $row_prod['name'], $price_desc, $quantity]);
             }
+            include 'send_email.php';
         }
         unset($_SESSION['carrito']);
     }

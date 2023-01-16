@@ -164,6 +164,8 @@ if ($products != null) {
             body: JSON.stringify({
                 detalles: detalles
             })
+          }).then(function(response){
+            window.location.href = "completed.php?key=" + detalles['id'];
           })
         });
       },
