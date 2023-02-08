@@ -21,9 +21,9 @@ function esEmail($email)
 function validaPassword($password, $repassword)
 {
     if(strcmp($password , $repassword) === 0){
-        return false;
+        return true;
     }
-    return true;        
+    return false;        
 }
 
 function generarToken()
