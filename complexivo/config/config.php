@@ -11,11 +11,11 @@ define("CLIENT_ID" , "AbIQMS6FeSOmuskYuf9eUUhBtZtc2ZH3nZhP8JfxzgGrQpP15KHJaEwpnu
 define("CURRENCY" , "USD");
 
 
-//configuracion correo electronico
-define("MAILS_HOST" , "smtp.gmail.com");
-define("MAILS_USER" , "kevinmotoche123@gmail.com");
-define("MAILS_PASS" , "");
-define("MAILS_PORT" , "587");
+/*configuracion correo electronico por si no desea hacerlo con las ''
+define("MAILS_HOST" , 'smtp.gmail.com');
+define("MAILS_USER" , 'kevinmotoche123@gmail.com');
+define("MAILS_PASS" , "krcvquhatxpdzdks");
+define("MAILS_PORT" , "587");*/
 
 
 session_start();

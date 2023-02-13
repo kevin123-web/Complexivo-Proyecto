@@ -48,9 +48,9 @@ function registrarUser(array $datos, $con)
     ?,?,?,?)");
 
     if ($sql->execute($datos)) {
-        return true;
+        return $con->lastInsertid();
     }
-    return false;
+    return 0;
 }
 
 function userExiste($user, $con)
@@ -97,3 +97,27 @@ function mostrarMensajes(array $errors)
         echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>    ';
     }
 }
+
+function validarToken($id, $token, $con)
+{
+    $msg  = "";
+    $sql = $con->prepare("SELECT id FROM users WHERE id = ? AND token LIKE ? LIMIT 1");
+    $sql->execute([$id,$token]);
+    if($sql->fetchColumn() > 0){
+        if(activarUsario($id, $con)){
+            $msg = "Cuenta Activada.";
+        }else{
+            $msg = "Error al activar la cuenta";
+        }
+    }else{
+        $msg  = "No existe el registro del cliente.";
+    }
+    return $msg;
+}
+
+function activarUsario($id, $con)
+{
+    $sql = $con->prepare("UPDATE users SET activation = 1 , token = '' WHERE id = ?");
+    return $sql->execute([$id]);
+ 
+}   

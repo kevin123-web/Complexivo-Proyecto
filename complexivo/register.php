@@ -53,14 +53,18 @@ if (!empty($_POST)) {
             require 'class/Mailer.php';
             $mailer = new Mailer();
             $token = generarToken();
-            $url = SITE_URL . "/activateClient.php?id=" . $id . '&token=' . $token;
-            $asunto = "Activar cuenta - Tienda Sublimados Quito";
-            $cuerpo = "Estimado $names:<br> Para continuar con el proceso es importante dar click al siguiente enlace
-            <a href='$url'> Activar Cuenta </a> ";
+
 
             $pass_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            if (registrarUser([$user, $pass_hash, $token, $id], $con)) {
+            $idUsuario = registrarUser([$user, $pass_hash, $token, $id], $con);
+            if ($idUsuario > 0) {
+
+                $url = SITE_URL . "/activateClient.php?id=" . $idUsuario . '&token=' . $token;
+                $asunto = "Activar cuenta - Tienda Sublimados Quito";
+                $cuerpo = "Estimado $names:<br> Para continuar con el proceso es importante dar click al siguiente enlace
+                <a href='$url'> Activar Cuenta </a> ";
+
                 if ($mailer->sendEmail($email, $asunto, $cuerpo)) {
                     echo "Para continuar el proceso del registro siga las instrucciones que se envio a su correo 
                     electrónico $email";
