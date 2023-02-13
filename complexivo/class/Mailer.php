@@ -20,7 +20,7 @@ class Mailer
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
             $mail->Username   = 'kevinmotoche123@gmail.com';
-            $mail->Password   = 'krcvquhatxpdzdks';
+            $mail->Password   = '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;                         
 
