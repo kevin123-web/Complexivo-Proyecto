@@ -49,9 +49,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <a href="#" class="nav-link ">Contacto</a>
                         </li>
                     </ul>
-                    <a href="list_checkout.php" class="btn btn-primary">
-                        Carrito<span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                    </a>
+                    <a href="form.php" class="btn btn-primary">
+                        Crear Articulo</a>
                 </div>
             </div>
         </div>
@@ -80,6 +79,9 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
+                                        <a href="editar.php?id=<?php echo $row['id']; ?>">Editar</a>
+                                        <a href="eliminar.php?id=<?php echo $row['id']; ?>">Eliminar</a>
+                                    
                                     </div>
                                     <button class="btn btn-outline-success" type="button" onclick="addProduct(<?php echo  $row['id']; ?>,
                                     '<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>')">Agregar al carrito</button>

@@ -31,10 +31,10 @@ function generarToken()
     return md5(uniqid(mt_rand(), false));
 }
 
-function registrarClient(array $datos, $con)
+function crearProducto(array $datos, $con)
 {
-    $sql = $con->prepare("INSERT INTO clients (names, lastnames, email, phone, cedula, status, date_up) VALUES(
-    ?,?,?,?,?,1,now())");
+    $sql = $con->prepare("INSERT INTO products (name, description, price, discount, id_category, activo) VALUES(
+    ?,?,?,?,1,?)");
 
     if ($sql->execute($datos)) {
         return $con->lastInsertid();
