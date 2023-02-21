@@ -2,6 +2,7 @@
 
 use PHPMailer\PHPMailer\{PHPMailer ,SMTP, Exception};
 
+
 require '../phpmailer/src/PHPMailer.php';
 require '../phpmailer/src/SMTP.php';
 require '../phpmailer/src/Exception.php';
@@ -13,15 +14,15 @@ try {
     //Server settings
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;           //SMTP::DEBUG_OFF
     $mail->isSMTP();
-    $mail->Host       = 'smtp.gmail.com';            
+    $mail->Host       = MAIL_HOST;            
     $mail->SMTPAuth   = true;                                   
-    $mail->Username   = 'kevinmotoche123@gmail.com';                     
-    $mail->Password   = '';                               
+    $mail->Username   = MAIL_USER;                     
+    $mail->Password   = MAIL_PASS;                               
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            
-    $mail->Port       = 587;                         //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Port       = MAIL_PORT;                         //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('kevinmotoche123@gmail.com', 'TIENDA SUBLIMADOS');
+    $mail->setFrom(MAIL_USER, 'TIENDA SUBLIMADOS');
     $mail->addAddress('kjr.motoche@yavirac.edu.ec', 'Joe User');     
 
     //Content

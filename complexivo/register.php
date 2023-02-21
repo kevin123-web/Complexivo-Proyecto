@@ -28,7 +28,7 @@ if (!empty($_POST)) {
         $errors[] = "Dirreción de correo no valida";
     }
 
-    if (validaPassword($password, $repassword)) {
+    if (!validaPassword($password, $repassword)) {
         $errors[] = "Las contraseñas no coinciden";
     }
 
@@ -49,9 +49,28 @@ if (!empty($_POST)) {
         $id = registrarClient([$names, $lastnames, $email, $phone, $cedula], $con);
 
         if ($id > 0) {
-            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            require 'class/Mailer.php';
+            $mailer = new Mailer();
             $token = generarToken();
-            if (!registrarUser([$user, $pass_hash, $token, $id], $con)) {
+
+
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $idUsuario = registrarUser([$user, $pass_hash, $token, $id], $con);
+            if ($idUsuario > 0) {
+
+                $url = SITE_URL . "/activateClient.php?id=" . $idUsuario . '&token=' . $token;
+                $asunto = "Activar cuenta - Tienda Sublimados Quito";
+                $cuerpo = "Estimado $names:<br> Para continuar con el proceso es importante dar click al siguiente enlace
+                <a href='$url'> Activar Cuenta </a> ";
+
+                if ($mailer->sendEmail($email, $asunto, $cuerpo)) {
+                    echo "Para continuar el proceso del registro siga las instrucciones que se envio a su correo 
+                    electrónico $email";
+                    exit;
+                }
+            } else {
                 $errors[] = "Error al registrar el Usuario";
             }
         } else {
@@ -125,6 +144,7 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="email"><span class="text-danger">*</span>Correo electrónico</label>
                     <input type="email" name="email" id="email" class="form-control" requireda>
+                    <span id="validateEmail" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="phone"><span class="text-danger">*</span>Celular</label>
@@ -134,10 +154,12 @@ if (!empty($_POST)) {
                 <div class="col-md-6">
                     <label for="cedula"><span class="text-danger">*</span>Cedula</label>
                     <input type="text" name="cedula" id="cedula" class="form-control" requireda>
+                    <span id="validateCedula" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label for="user"><span class="text-danger">*</span>Usuario</label>
                     <input type="text" name="user" id="user" class="form-control" requireda>
+                    <span id="validateUser" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
@@ -159,6 +181,86 @@ if (!empty($_POST)) {
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
+
+    <script>
+        let txtUsuario = document.getElementById('user')
+        txtUsuario.addEventListener("blur", function() {
+            existeUser(txtUsuario.value)
+        }, false)
+
+        let txtEmail = document.getElementById('email')
+        txtEmail.addEventListener("blur", function() {
+            existeEmail(txtEmail.value)
+        }, false)
+
+        let txtCedula = document.getElementById('cedula')
+        txtCedula.addEventListener("blur", function() {
+            existeCedula(txtCedula.value)
+        }, false)
+
+        function existeCedula(cedula) {
+            let url = "class/clientAjax.php"
+            let formData = new FormData()
+            formData.append("actions", "existeCedula")
+            formData.append("cedula", cedula)
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    if (data.ok) {
+                        document.getElementById('cedula').value = ''
+                        document.getElementById('validateCedula').innerHTML = 'Cedula no disponible'
+                    } else {
+                        document.getElementById('validateCedula').innerHTML = ''
+                    }
+                })
+        }
+
+        function existeEmail(email) {
+            let url = "class/clientAjax.php"
+            let formData = new FormData()
+            formData.append("actions", "existeEmail")
+            formData.append("email", email)
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    if (data.ok) {
+                        document.getElementById('email').value = ''
+                        document.getElementById('validateEmail').innerHTML = 'Email no disponible'
+                    } else {
+                        document.getElementById('validateEmail').innerHTML = ''
+                    }
+                })
+        }
+
+        function existeUser(user) {
+            let url = "class/clientAjax.php"
+            let formData = new FormData()
+            formData.append("actions", "existeUser")
+            formData.append("user", user)
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+                .then(data => {
+
+                    if (data.ok) {
+                        document.getElementById('user').value = ''
+                        document.getElementById('validateUser').innerHTML = 'Usuario no disponible'
+                    } else {
+                        document.getElementById('validateUser').innerHTML = ''
+                    }
+                })
+        }
     </script>
 </body>
 
