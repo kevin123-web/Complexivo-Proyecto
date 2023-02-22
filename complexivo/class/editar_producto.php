@@ -1,21 +1,26 @@
 <?php
-// Recupera los datos existentes del usuario desde la base de datos
-$datos = obtener_datos($products);
 
-// Si se ha enviado el formulario de edición, actualiza los datos en la base de datos
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $name = $_POST['name'];
-  $description = $_POST['description'];
-  $price = $_POST['price'];
-  $discount = $_POST['discount'];
-  $activo = $_POST['activo'];
+#Salir si alguno de los datos no está presente
+if(
+	!isset($_POST["name"]) || 
+	!isset($_POST["id"])
+) exit();
 
-  
-  // Realiza la actualización en la base de datos
-  actualizar_datos($products, $name, $description, $price, $discount, $activo );
-  
-  // Redirige al usuario de vuelta a la página de detalles del usuario
-  header("Location: detalles.php?id=$products");
-  exit;
-}
+#Si todo va bien, se ejecuta esta parte del código...
+
+include_once "../config/db.php";
+$id = $_POST["id"];
+$name  = $_POST["name"];
+$db = new Database();
+$con = $db->conectar();
+
+$sentencia = $con->prepare("UPDATE products SET name = ? WHERE id = ?;");
+$resultado = $sentencia->execute([$name, $id]); # Pasar en el mismo orden de los ?
+
+if($resultado === true ) {
+echo "cambios guardados perro :v ";
+echo '<div class="btn-group"><a href="http://localhost/Complexivo-Proyecto/complexivo/" class="btn btn-primary">regresar</a></div>';
+
+}else echo "Algo salió mal. Por favor verifica que la tabla exista, así como el ID del usuario";
 ?>
+

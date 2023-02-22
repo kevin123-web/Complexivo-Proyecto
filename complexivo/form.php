@@ -21,47 +21,11 @@ if (!empty($_POST)) {
     if (count($errors) == 0) {
 
        $id = crearProducto([$name, $description, $price, $discount ,$activo], $con);
-
-       if ($id > 0) {
-        echo 'se a creado correctamente'; 
-       } else {
-           $errors[] = "Error al crear su Producto";
-       }
-   }
+   } else {
+    $errors[] = "Error al crear el producto perro :v ";
+}
 }
 
-
-if (isset($_FILES['image'])) {
-    $file = $_FILES['image'];
-  
-    // Verifica si el archivo subido es una imagen
-    $image_info = getimagesize($file['tmp_name']);
-    if (!$image_info) {
-      echo 'El archivo subido no es una imagen';
-      return;
-    }
-  
-    // Verifica si el archivo subido está dentro de los límites permitidos
-    if ($file['size'] > 1000000) {
-      echo 'El archivo subido es demasiado grande';
-      return;
-    }
-  
-    // Verifica si no hubo errores al subir el archivo
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-      echo 'Hubo un error al subir el archivo';
-      return;
-    }
-  
-    // Mueve el archivo subido a su destino final
-    $destination = 'images/' . $file['name'];
-    if (!move_uploaded_file($file['tmp_name'], $destination)) {
-      echo 'Hubo un error al mover el archivo subido';
-      return;
-    }
-  
-    echo 'La imagen se ha subido correctamente';
-  }
 
 ?>
 
@@ -129,9 +93,6 @@ if (isset($_FILES['image'])) {
                     <label for="discount"><span class="text-danger">*</span>Descuento</label>
                     <input type="number" name="discount" id="discount" class="form-control" requireda>
                 </div>
-                <div action="upload.php" method="post" enctype="multipart/form-data">
-                    <input type="file" name="image">
-                </div>
                 <div class="col-md-6">
                     <label for="activo"><span class="text-danger">*</span>activo</label>
                     <input type="int" name="activo" id="activo" class="form-control" requireda>
@@ -142,6 +103,12 @@ if (isset($_FILES['image'])) {
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </div>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                    <a href="http://localhost/Complexivo-Proyecto/complexivo/" class="btn btn-primary">regresar</a>
+                                    
+                                    </div>
             </form>
             
 

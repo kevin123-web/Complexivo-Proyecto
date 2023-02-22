@@ -79,8 +79,8 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">Detalles</a>
-                                        <a href="editar.php?id=<?php echo $row['id']; ?>">Editar</a>
-                                        <a href="eliminar.php?id=<?php echo $row['id']; ?>">Eliminar</a>
+                                        <a href="editar2.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">editar</a>
+                                        <a href="class/eliminar.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'], KEY_TOKEN); ?>" class="btn btn-primary">eliminar</a>
                                     
                                     </div>
                                     <button class="btn btn-outline-success" type="button" onclick="addProduct(<?php echo  $row['id']; ?>,
