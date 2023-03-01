@@ -26,6 +26,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/fontawesome-free-6.3.0-web/css/all.min.css">
 </head>
 
 <body>
@@ -49,9 +50,16 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                             <a href="#" class="nav-link ">Contacto</a>
                         </li>
                     </ul>
-                    <a href="list_checkout.php" class="btn btn-primary">
+                    <a href="list_checkout.php" class="btn btn-primary me-2">
                         Carrito<span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
                     </a>
+
+                    <?php if(isset($_SESSION['user_id'])) {?>
+                        <a href="#" class="btn btn-success"><i class="fa-regular fa-user"></i>
+                        <?php echo $_SESSION['user_name']; ?></a>
+                    <?php } else{ ?>
+                        <a href="login.php" class="btn btn-success"><i class="fa-regular fa-user"></i></i>Ingresar</a>
+                    <?php } ?>    
                 </div>
             </div>
         </div>
