@@ -13,13 +13,22 @@ print_r($datos);
 echo '</pre>';*/
 
 if (is_array($datos)) {
+
+    $id_client = $_SESSION['user_client'];
+    $sql =  $con->prepare("SELECT email  FROM clients WHERE id=? AND status=1");
+    $sql->execute([$id_client]);
+    $row_client = $sql->fetch(PDO::FETCH_ASSOC);
+
+
     $id_transaction = $datos['detalles']['id'];
     $total = $datos['detalles']['purchase_units'][0]['amount']['value'];
     $status = $datos['detalles']['status'];
     $date = $datos['detalles']['update_time'];
     $date_new = date('Y-m-d H:i:s', strtotime($date));
-    $email = $datos['detalles']['payer']['email_address'];
-    $id_client = $datos['detalles']['payer']['payer_id'];
+    //$email = $datos['detalles']['payer']['email_address'];
+    $email = $row_client['email'];
+    //$id_client = $datos['detalles']['payer']['payer_id'];
+
 
     $sql = $con->prepare("INSERT INTO buys (id_transaction, date, status, email, id_client, total) 
     VALUES(?,?,?,?,?,?)");
@@ -48,7 +57,14 @@ if (is_array($datos)) {
 
                 $sql_insert->execute([$id, $clave, $row_prod['name'], $price_desc, $quantity]);
             }
-            include 'send_email.php';
+            require 'Mailer.php';
+
+            $asunto = "Detalles de su compra";
+            $cuerpo = '<h4>Gracias por su compra!!</h4>';
+            $cuerpo .= '<p>El ID de su compra es <br>'. $id_transaction .'</br> </p>';
+
+            $mailer = new Mailer();
+            $mailer->sendEmail($email, $asunto, $cuerpo);
         }
         unset($_SESSION['carrito']);
     }

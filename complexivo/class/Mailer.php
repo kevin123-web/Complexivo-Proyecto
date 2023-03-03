@@ -7,9 +7,9 @@ class Mailer
     function sendEmail($email, $asunto, $cuerpo)
     {
         
-        require './phpmailer/src/PHPMailer.php';
-        require './phpmailer/src/SMTP.php';
-        require './phpmailer/src/Exception.php';
+        require __DIR__ . '/../phpmailer/src/PHPMailer.php';
+        require __DIR__ . '/../phpmailer/src/SMTP.php';
+        require __DIR__ . '/../phpmailer/src/Exception.php';
 
         $mail = new PHPMailer(true);
 

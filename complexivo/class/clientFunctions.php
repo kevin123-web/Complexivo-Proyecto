@@ -106,6 +106,7 @@ function validarToken($id, $token, $con)
     if ($sql->fetchColumn() > 0) {
         if (activarUsario($id, $con)) {
             $msg = "Cuenta Activada.";
+            $msg .= "<br>Si quieres iniciar sesión de clik en el siguiente link <a href ='login.php'>Iniciar Sesión</a>";
         } else {
             $msg = "Error al activar la cuenta";
         }
@@ -121,24 +122,29 @@ function activarUsario($id, $con)
     return $sql->execute([$id]);
 }
 
-function login($user, $password, $con)
+function login($user, $password, $con, $proceso)
 {
-    $sql = $con->prepare("SELECT id, user, password FROM users WHERE user LIKE ? LIMIT 1");
+    $sql = $con->prepare("SELECT id, user, password, id_client FROM users WHERE user LIKE ? LIMIT 1");
     $sql->execute([$user]);
 
     if ($row = $sql->fetch(PDO::FETCH_ASSOC)) {
-        if(esActivo($user, $con)){
-            if(password_verify($password, $row['password'])){
+        if (esActivo($user, $con)) {
+            if (password_verify($password, $row['password'])) {
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['user'];
+                $_SESSION['user_client'] = $row['id_client'];
+                if($proceso == 'pago'){
+                    header("Location: list_checkout.php");
+                }else{
                 header("Location: index.php");
+                }
                 exit;
             }
-        }else{
+        } else {
             return 'El usuario no ah sido activado.';
         }
     }
-    return 'El usuario y/o contraseña son incorrectas.'; 
+    return 'El usuario y/o contraseña son incorrectas.';
 }
 
 function esActivo($user, $con)
@@ -147,6 +153,37 @@ function esActivo($user, $con)
     $sql->execute([$user]);
     $row = $sql->fetch(PDO::FETCH_ASSOC);
     if ($row['activation'] == 1) {
+        return true;
+    }
+    return false;
+}
+
+function solicitaPassword($user_id, $con)
+{
+    $token = generarToken();
+
+    $sql = $con->prepare("UPDATE users SET token_password = ? , password_request = 1 WHERE id = ? ");
+    if ($sql->execute([$token, $user_id])) {
+        return $token;
+    }
+    return null;
+}
+
+function verificaTokenRequest($user_id, $con, $token)
+{
+    $sql = $con->prepare("SELECT id FROM users WHERE id = ? AND token_password  LIKE ? 
+    AND password_request = 1 LIMIT 1");
+    $sql->execute([$user_id, $token]);
+    if ($sql->fetchColumn() > 0) {
+        return true;
+    }
+    return false;
+}
+
+function actualizaPassword($user_id, $password, $con,)
+{
+    $sql = $con->prepare("UPDATE users SET password = ? , token_password = '', password_request = 0 WHERE id = ? ");
+    if ($sql->execute([ $password, $user_id])) {
         return true;
     }
     return false;

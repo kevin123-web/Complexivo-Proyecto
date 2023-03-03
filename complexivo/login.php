@@ -4,6 +4,7 @@ require 'config/config.php';
 require 'config/db.php';
 require 'class/clientFunctions.php';
 
+$proceso = isset($_GET['pago']) ? 'pago' : 'login';
 
 $db = new Database();
 $con = $db->conectar();
@@ -14,12 +15,13 @@ if (!empty($_POST)) {
 
     $user = trim($_POST['user']);
     $password = trim($_POST['password']);
-    
-    if (esNulo([ $user, $password])) {
+    $proceso = $_POST['proceso'] ?? 'login';
+
+    if (esNulo([$user, $password])) {
         $errors[] = "Debe llenar todos los campos";
     }
 
-    $errors[] = login($user , $password , $con);
+    $errors[] = login($user, $password, $con, $proceso);
 }
 
 
@@ -74,6 +76,9 @@ if (!empty($_POST)) {
         <?php mostrarMensajes($errors); ?>
 
         <form class="row g-3" action="login.php" method="post" autocomplete="off">
+
+            <input type="hidden" name="proceso" value="<?php echo $proceso; ?>">
+             
             <div class="form-floating">
                 <input class="form-control" type="text" name="user" id="user" placeholder="Usuario" required>
                 <label for="user">Usuario</label>

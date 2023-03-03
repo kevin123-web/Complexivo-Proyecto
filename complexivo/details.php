@@ -71,36 +71,12 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/fontawesome-free-6.3.0-web/css/all.min.css">
+
 </head>
 
 <body>
-    <header>
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark ">
-            <div class="container">
-                <a href="#" class="navbar-brand ">
-                    <strong>Tienda Online</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarHeader">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">Catalogo</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link ">Contacto</a>
-                        </li>
-                    </ul>
-                    <a href="list_checkout.php" class="btn btn-primary">
-                        Carrito<span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php include 'menu.php'; ?>
 
     <main>
         <div class="container">
@@ -147,7 +123,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                     </p>
 
                     <div class="d-grid gap-3 col-9 mx-30">
-                        <button class="btn btn-primary" type="button">Comprar ahora</button>
+                        <a href="list_checkout.php" class="btn btn-primary ">Comprar Ahora</a>
                         <button class="btn btn-outline-primary" type="button" onclick="addProduct(<?php echo $id; ?>,
                         '<?php echo $token_tmp; ?>')">Agregar al carrito</button>
                     </div>
@@ -172,7 +148,7 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
                     mode: 'cors'
                 }).then(response => response.json())
                 .then(data => {
-                    if(data.ok){
+                    if (data.ok) {
                         let element = document.getElementById("num_cart")
                         element.innerHTML = data.number
                     }
