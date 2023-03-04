@@ -101,14 +101,10 @@ if (!empty($_POST)) {
                 <i><b>Nota:</b> Los campos con (*) son obligatorios </i>
 
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
                 </div>
                 
-                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                    <a href="http://localhost/Complexivo-Proyecto/complexivo/" class="btn btn-primary">regresar</a>
-                                    
-                                    </div>
+
             </form>
             
 
