@@ -42,7 +42,7 @@ if($persona === FALSE){
   },
 
 </style>
-<div style="background-color: #f2f2f2; display: flex; justify-content: center; ">
+<div style="background-color: white; display: flex; justify-content: center; ">
 <main >
 	<form class="form-detalles m-auto pt-4" method="post" action="class/editar_producto.php">
 		<!-- Ocultamos el ID para que el usuario no pueda cambiarlo (en teoría) -->
