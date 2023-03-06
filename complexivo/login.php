@@ -20,16 +20,24 @@ if (!empty($_POST)) {
     if (esNulo([$user, $password])) {
         $errors[] = "Debe llenar todos los campos";
     }
+    if ($user == 'ADMIN'){
+        header('Location: admin.php');
+    }else{
+        header('Location: index.php');
+    }
 
     $errors[] = login($user, $password, $con, $proceso);
 }
+
+
+
+
 
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -78,7 +86,7 @@ if (!empty($_POST)) {
         <form class="row g-3" action="login.php" method="post" autocomplete="off">
 
             <input type="hidden" name="proceso" value="<?php echo $proceso; ?>">
-             
+
             <div class="form-floating">
                 <input class="form-control" type="text" name="user" id="user" placeholder="Usuario" required>
                 <label for="user">Usuario</label>
@@ -107,7 +115,7 @@ if (!empty($_POST)) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
-
+   
 
 </body>
 

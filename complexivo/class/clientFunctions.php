@@ -133,11 +133,9 @@ function login($user, $password, $con, $proceso)
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['user'];
                 $_SESSION['user_client'] = $row['id_client'];
-                if($proceso == 'pago'){
+                if ($proceso == 'pago') {
                     header("Location: list_checkout.php");
-                }else{
-                header("Location: index.php");
-                }
+                } 
                 exit;
             }
         } else {
@@ -183,8 +181,23 @@ function verificaTokenRequest($user_id, $con, $token)
 function actualizaPassword($user_id, $password, $con,)
 {
     $sql = $con->prepare("UPDATE users SET password = ? , token_password = '', password_request = 0 WHERE id = ? ");
-    if ($sql->execute([ $password, $user_id])) {
+    if ($sql->execute([$password, $user_id])) {
         return true;
     }
     return false;
 }
+
+// admin Funtions
+
+function crearProducto(array $datos, $con)
+{
+    $sql = $con->prepare("INSERT INTO products (name, description, price, discount, id_categoria, activo) VALUES(
+    ?,?,?,?,1,?)");
+
+    if ($sql->execute($datos)) {
+        return $con->lastInsertid();
+    }
+    return 0;
+}
+
+// roles admin 
