@@ -104,17 +104,17 @@ if ($persona === FALSE) {
 
             <div class="form-group">
                 <label for="price" class="form-label">Nuevo Precio del Producto </label>
-                <input type="number" value="<?php echo $persona->price ?>" name="price" class="form-control custom-input" placeholder="escribe el precio" step="any">
+                <input type="number" min="0" step="any" value="<?php echo $persona->price ?>" name="price" class="form-control custom-input" placeholder="escribe el precio" step="any">
             </div>
 
             <div class="form-group">
                 <label for="discount" class="form-label">Nuevo Descuento del Producto </label>
-                <input type="number" value="<?php echo $persona->discount ?>" name="discount" class="form-control custom-input" placeholder="escribe el descuento">
+                <input type="number" min="0" max="100" step="1" value="<?php echo $persona->discount ?>" name="discount" class="form-control custom-input" placeholder="escribe el descuento">
             </div>
 
             <div class="form-group">
                 <label for="activo" class="form-label">Activo del Producto </label>
-                <input type="number" value="<?php echo $persona->activo ?>" name="activo" class="form-control custom-input" placeholder="escribe el activo">
+                <input type="number" min="0" max="1" step="1" value="<?php echo $persona->activo ?>" name="activo" class="form-control custom-input" placeholder="escribe el activo">
             </div>
 
 

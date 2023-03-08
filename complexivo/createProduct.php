@@ -62,9 +62,7 @@ if (!empty($_POST)) {
                         <a href="contacto.php" class="nav-link ">Contacto</a>
                     </li>
                 </ul>
-                <a href="list_checkout.php" class="btn btn-primary me-2 btn-sm ">
-                    Carrito<span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                </a>
+                
 
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <div class="dropdown">
@@ -87,7 +85,7 @@ if (!empty($_POST)) {
     <!--contenido-->
     <main>
         <div class="container">
-            <h2>Crear Articulo</h2>
+            <h2>Crear Artículo</h2>
 
             <?php mostrarMensajes($errors); ?>
 
@@ -103,15 +101,15 @@ if (!empty($_POST)) {
 
                 <div class="col-md-6">
                     <label for="price"><span class="text-danger">*</span>Precio</label>
-                    <input type="number" name="price" step="any" id="price" class="form-control" requireda>
+                    <input type="number" min="0" step="any" name="price"  id="price" class="form-control" requireda>
                 </div>
                 <div class="col-md-6">
                     <label for="discount"><span class="text-danger">*</span>Descuento</label>
-                    <input type="number" name="discount" id="discount" class="form-control" requireda>
+                    <input type="number" min="0" max="100" step="1" name="discount" id="discount" class="form-control" requireda>
                 </div>
                 <div class="col-md-6">
                     <label for="activo"><span class="text-danger">*</span>activo</label>
-                    <input type="int" name="activo" id="activo" class="form-control" requireda>
+                    <input type="number" min="0" max="1" step="1" name="activo" id="activo" class="form-control" requireda>
                 </div>
 
                 <i><b>Nota:</b> Los campos con (*) son obligatorios </i>
