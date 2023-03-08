@@ -43,7 +43,6 @@ if ($products != null) {
 <body>
     <?php include 'menu.php'; ?>
 
-
     <!--contenido-->
     <main>
         <div class="container">
@@ -78,7 +77,7 @@ if ($products != null) {
                                     <td><?php echo $name; ?></td>
                                     <td><?php echo MONEDA . number_format($price_desc, 2, '.', ','); ?></td>
                                     <td>
-                                        <input type="number" min="1" max="10" step="1" value="<?php echo $quantity ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange="actualizaCantidad(this.value , <?php echo $_id; ?>)">
+                                        <input type="number" min="1" max="12" step="1" value="<?php echo $quantity ?>" size="5" id="cantidad_<?php echo $_id; ?>" onchange="actualizaCantidad(this.value , <?php echo $_id; ?>)">
                                     </td>
                                     <td>
                                         <div id="subtotal_<?php echo $_id; ?>" name="subtotal[]"><?php echo MONEDA . number_format($subtotal, 2, '.', ','); ?></div>

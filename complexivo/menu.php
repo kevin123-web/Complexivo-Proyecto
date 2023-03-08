@@ -25,15 +25,15 @@
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <div class="dropdown">
                         <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="btn_session" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-regular fa-user"></i><?php echo $_SESSION['user_name']; ?></a>
+                            <i class="fa-regular fa-user"></i><?php echo $_SESSION['user_name']; ?></a>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="btn_session">
-                        <li><a class="dropdown-item" href="history.php">Mis compras</a></li>
+                            <li><a class="dropdown-item" href="history.php">Mis compras</a></li>
                             <li><a class="dropdown-item" href="logout.php">Cerrar Sesión</a></li>
                         </ul>
                     </div>
                 <?php } else { ?>
-                    <a href="login.php" class="btn btn-success btn-sm "><i class="fa-regular fa-user"></i></i>Ingresar</a>
+                    <a href="login.php" class="btn btn-success btn-sm "><i class="fa-solid fa-user"></i></i>Ingresar</a>
                 <?php } ?>
             </div>
         </div>

@@ -200,4 +200,3 @@ function crearProducto(array $datos, $con)
     return 0;
 }
 
-// roles admin 

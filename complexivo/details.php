@@ -77,7 +77,6 @@ $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 
 <body>
     <?php include 'menu.php'; ?>
-
     <main>
         <div class="container">
             <div class="row">
