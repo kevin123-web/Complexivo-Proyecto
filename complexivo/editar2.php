@@ -8,14 +8,16 @@ $id = $_GET["id"];
 $db = new Database();
 $con = $db->conectar();
 
-$sentencia = $con->prepare("SELECT * FROM products WHERE id = ?;");
+$sentencia = $con->prepare("SELECT products.id, products.name, products.discount, products.price, products.description, products.activo, categorias.name AS category_name FROM products JOIN categorias ON products.id_category = categorias.id WHERE products.id = ?");
 $sentencia->execute([$id]);
-$persona = $sentencia->fetch(PDO::FETCH_OBJ);
-if($persona === FALSE){
-	
-	echo "¡No existe ningun producto con ese ID!";
-	exit();
+$producto = $sentencia->fetch(PDO::FETCH_OBJ);
+
+if($producto === FALSE){
+    echo "¡No existe ningún producto con ese ID!";
+    exit();
 }
+
+// Agregue esta línea para ver si el objeto $producto contiene la propiedad category_name
 
 ?>
 
@@ -33,47 +35,45 @@ if($persona === FALSE){
 </head>
 <body>
      
-</body>
-
-
-<style>
-  .custom-input {
-    width:flex;
-  },
-
-</style>
 <div style="background-color: white; display: flex; justify-content: center; ">
 <main >
 	<form class="form-detalles m-auto pt-4" method="post" action="class/editar_producto.php">
 		<!-- Ocultamos el ID para que el usuario no pueda cambiarlo (en teoría) -->
-		<input type="hidden" name="id" value="<?php echo $persona->id; ?>">
+		<input type="hidden" name="id" value="<?php echo $producto->id; ?>">
 	
 	<h1>Editar Productos</h1>
 
 	<div class="form-group">
       <label for="name" class="form-label">Nuevo nombre del Producto </label>
-      <input type="text" value="<?php echo $persona->name?>" name="name" class="form-control custom-input" placeholder="escribe el nombre">
+      <input type="text" value="<?php echo $producto->name?>" name="name" class="form-control custom-input" placeholder="escribe el nombre">
     </div>
+	
 		
 	<div class="form-group">
 		<label for="description" class="form-label">Nueva Descripcion del Producto:</label>
-		<input type="text" value="<?php echo $persona->description?>" name="description" class="form-control custom-input" placeholder="escribe la descripcion">
+		<input type="text" value="<?php echo $producto->description?>" name="description" class="form-control custom-input" placeholder="escribe la descripcion">
 	</div>
 
 	<div class="form-group">
       <label for="price" class="form-label">Nuevo Precio del Producto </label>
-      <input type="number" value="<?php echo $persona->price?>" name="price" class="form-control custom-input" placeholder="escribe el precio" step="any">
+      <input type="number" value="<?php echo $producto->price?>" name="price" class="form-control custom-input" placeholder="escribe el precio" step="any">
     </div>
 
 	<div class="form-group">
       <label for="discount" class="form-label">Nuevo Descuento del Producto </label>
-      <input type="number" value="<?php echo $persona->discount?>" name="discount" class="form-control custom-input" placeholder="escribe el descuento">
+      <input type="number" value="<?php echo $producto->discount?>" name="discount" class="form-control custom-input" placeholder="escribe el descuento">
     </div>
 
 	<div class="form-group">
       <label for="activo" class="form-label">Activo del Producto </label>
-      <input type="number" value="<?php echo $persona->activo?>" name="activo" class="form-control custom-input" placeholder="escribe el activo">
+      <input type="number" value="<?php echo $producto->activo?>" name="activo" class="form-control custom-input" placeholder="escribe el activo">
     </div>
+
+	<div class="form-group">
+    <label for="category" class="form-label">Categoría</label>
+    <input readonly type="text" value="<?php echo $producto->category_name; ?>" name="category" class="form-control custom-input" placeholder="escribe la categoría">
+</div>
+
 
 
     

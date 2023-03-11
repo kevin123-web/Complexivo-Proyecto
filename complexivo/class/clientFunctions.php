@@ -34,7 +34,7 @@ function generarToken()
 function crearProducto(array $datos, $con)
 {
     $sql = $con->prepare("INSERT INTO products (name, description, price, discount, id_category, activo) VALUES(
-    ?,?,?,?,1,?)");
+    ?,?,?,?,?,?)");
 
     if ($sql->execute($datos)) {
         return $con->lastInsertid();

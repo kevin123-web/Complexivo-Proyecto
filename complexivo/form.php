@@ -16,16 +16,14 @@ if (!empty($_POST)) {
     $price = trim($_POST['price']);
     $discount = trim($_POST['discount']);
     $activo = trim($_POST['activo']);
-
+    $id_category = trim($_POST['id_category']);
   
     if (count($errors) == 0) {
-
-       $id = crearProducto([$name, $description, $price, $discount ,$activo], $con);
+        $id = crearProducto([$name, $description, $price, $discount ,$activo, $id_category], $con);
    } else {
-    $errors[] = "Error al crear el producto perro :v ";
+    $errors[] = "Error al crear el producto";
+   }
 }
-}
-
 
 ?>
 
@@ -70,6 +68,9 @@ if (!empty($_POST)) {
 
     <!--contenido-->
     <main>
+
+   
+
         <div class="container">
             <h2>Crear Articulo</h2>
 
@@ -84,6 +85,26 @@ if (!empty($_POST)) {
                     <label for="description"><span class="text-danger">*</span>Descripcion</label>
                     <input type="text" name="description" id="description" class="form-control" requireda>
                 </div>
+
+                <div class="col-md-6">
+ 
+
+            <div class="col-md-6">
+  <label for="id_category"><span class="text-danger">*</span>Categoría</label>
+  <select name="id_category" id="id_category" class="form-control" required>
+    <option value="">Seleccione una categoría</option>
+    <?php
+                $sql = $con->prepare("SELECT id, name FROM categorias");
+                $sql->execute();
+                $categorias = $sql->fetchAll(PDO::FETCH_ASSOC);
+                foreach ($categorias as $categoria) {
+                    echo '<option value="' . $categoria['id'] . '">' . $categoria['name'] . '</option>';
+}
+                ?>
+  </select>
+
+</div>
+
 
                 <div class="col-md-6">
                     <label for="price"><span class="text-danger">*</span>Precio</label>

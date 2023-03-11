@@ -25,7 +25,7 @@ $activo  = $_POST["activo"];
 
 
 $sentencia = $con->prepare("UPDATE products SET name = ?, description = ?, price = ?, discount = ?, activo = ? WHERE id = ?");
-$resultado = $sentencia->execute([$name, $description, $price, $discount, $activo, $id]); 
+$resultado = $sentencia->execute([$name, $description, $price, $discount, $activo,  $id]); 
 
 if($resultado === true ) {
 echo "cambios guardados  ";
@@ -36,4 +36,3 @@ echo '<div class="btn-group"><a href="http://localhost/Complexivo-Proyecto/compl
 }
 
 ?>
-
