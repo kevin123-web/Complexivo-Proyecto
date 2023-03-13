@@ -11,7 +11,7 @@
             <div class="collapse navbar-collapse" id="navbarHeader">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a href="index.php" class="nav-link active">Catalogo</a>
+                        <a href="index.php" class="nav-link active">Catálogo</a>
                     </li>
 
                     <li class="nav-item">

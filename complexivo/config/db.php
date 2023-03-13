@@ -2,7 +2,7 @@
 class Database {
 
      private $hostname = "localhost";
-     private $database = "tienda_online";
+     private $database = "test";
      private $username = "root";
      private $password = "12345";
 

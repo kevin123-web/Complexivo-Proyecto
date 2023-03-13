@@ -178,7 +178,7 @@ function verificaTokenRequest($user_id, $con, $token)
     return false;
 }
 
-function actualizaPassword($user_id, $password, $con,)
+function actualizaPassword($user_id, $password, $con)
 {
     $sql = $con->prepare("UPDATE users SET password = ? , token_password = '', password_request = 0 WHERE id = ? ");
     if ($sql->execute([$password, $user_id])) {
@@ -192,7 +192,7 @@ function actualizaPassword($user_id, $password, $con,)
 function crearProducto(array $datos, $con)
 {
     $sql = $con->prepare("INSERT INTO products (name, description, price, discount, id_categoria, activo) VALUES(
-    ?,?,?,?,1,?)");
+    ?,?,?,?,?,?)");
 
     if ($sql->execute($datos)) {
         return $con->lastInsertid();

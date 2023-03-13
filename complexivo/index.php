@@ -90,7 +90,7 @@ if (isset($_POST['buscar'])) {
                         <div class="card shadow-sm">
                             <?php
                             $id = $row['id'];
-                            $images = "images/productos/" . $id . "/laptop.jpg"; //agregar a la base de datos
+                            $images = "images/productos/" . $id . "/descarga.jpg"; //agregar a la base de datos
 
                             if (!file_exists($images)) {
                                 $images =  "images/no-photo.jpg"; //nase de datos no mas

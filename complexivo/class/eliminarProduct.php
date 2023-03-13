@@ -10,5 +10,5 @@ $sentencia = $con->prepare("DELETE FROM products WHERE id = ?;");
 $resultado = $sentencia->execute([$id]);
 if ($resultado === TRUE) {
     echo "Eliminado correctamente";
-    echo '<div class="btn-group"><a href="http://localhost/complexivo/admin.php" class="btn btn-primary">regresar</a></div>';
+    echo '<div class="btn-group"><a href="http://localhost/proyecto/Complexivo-Proyecto/complexivo/admin.php" class="btn btn-primary">regresar</a></div>';
 } else echo "Algo salió mal";

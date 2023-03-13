@@ -29,7 +29,7 @@ if ($id == '' || $token == '') {
             $price_desc = $price - (($price * $discount) / 100);
             $dir_images = 'images/productos/' . $id . '/';
 
-            $rutaImg = $dir_images . 'laptop.jpg';
+            $rutaImg = $dir_images . 'descarga.jpg';
 
             if (!file_exists($rutaImg)) {
                 $rutaImg = 'images/no-photo.jpg';
@@ -40,7 +40,7 @@ if ($id == '' || $token == '') {
                 $dir = dir($dir_images);
 
                 while (($archivo = $dir->read()) != false) {
-                    if ($archivo != 'laptop.jpg' && (strpos($archivo, 'jpg') || strpos($archivo, 'jpeg'))) {
+                    if ($archivo != 'descarga.jpg' && (strpos($archivo, 'jpg') || strpos($archivo, 'jpeg'))) {
                         $image[] = $dir_images . $archivo;
                     }
                 }

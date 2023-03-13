@@ -20,9 +20,9 @@ if (isset($_POST['buscar'])) {
     $resultado = $sql->fetchAll(PDO::FETCH_ASSOC);
 } else {
     // Si no se ha enviado el formulario de búsqueda, mostramos todos los productos de la categoría seleccionada
-    $sql = $con->prepare("SELECT id, name, price, discount FROM products WHERE activo=1");
+    $sql = $con->prepare("SELECT id, name, price, discount FROM products");
     if (!empty($categoria)) {
-        $sql = $con->prepare("SELECT id, name, price, discount FROM products WHERE activo=1 AND id_categoria = '$categoria'");
+        $sql = $con->prepare("SELECT id, name, price, discount FROM products  AND id_categoria = '$categoria'");
     }
 
     $sql->execute();
@@ -68,7 +68,7 @@ if (isset($_POST['buscar'])) {
                 <div class="collapse navbar-collapse" id="navbarHeader">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a href="admin.php" class="nav-link active">Catalogo</a>
+                            <a href="admin.php" class="nav-link active">Catálogo</a>
                         </li>
 
                         <li class="nav-item">
@@ -120,7 +120,7 @@ if (isset($_POST['buscar'])) {
                         <div class="card shadow-sm">
                             <?php
                             $id = $row['id'];
-                            $images = "images/productos/" . $id . "/laptop.jpg"; //agregar a la base de datos
+                            $images = "images/productos/" . $id . "/descarga.jpg"; //agregar a la base de datos
 
                             if (!file_exists($images)) {
                                 $images =  "images/no-photo.jpg"; //Base de datos no mas

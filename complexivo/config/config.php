@@ -2,7 +2,7 @@
 
 
 //configuracion del sistema
-define("SITE_URL" , "http://localhost/complexivo");
+define("SITE_URL" , "http://localhost/proyecto/Complexivo-Proyecto/complexivo");
 define("KEY_TOKEN" , "APR.wqc-354*");
 define("MONEDA" ,"$");  
 
